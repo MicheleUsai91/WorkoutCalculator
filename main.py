@@ -14,10 +14,10 @@ def menu():
         elif inp == 3:
             print(workoutCalc.volume())
         elif inp == 4:
-            weight = utils.userIntegerInput("Lbs: ")
+            weight = utils.userStringInput("Lbs: ")
             print(workoutCalc.weightConverter(weight, True))
         elif inp == 5:
-            weight = utils.userIntegerInput("Kg: ")
+            weight = utils.userStringInput("Kg: ")
             print(workoutCalc.weightConverter(weight, False))
         elif inp == 6:
             print("Arrivederci")
