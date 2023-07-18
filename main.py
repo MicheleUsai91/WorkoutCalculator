@@ -3,7 +3,7 @@ import workoutCalc
 
 def menu():
     while True:
-        menuView(["MASSIMALE TEORICO","CARICO LAVORO","VOLUME ALLENAMENTO","LBS -> KG","USCITA"])
+        menuView(["MASSIMALE TEORICO","CARICO LAVORO","VOLUME ALLENAMENTO","LBS -> KG","KG -> LBS","USCITA"])
         inp = utils.userIntegerInput("SCELTA: ")
 
         if inp == 1:
@@ -15,8 +15,11 @@ def menu():
             print(workoutCalc.volume())
         elif inp == 4:
             weight = utils.userIntegerInput("Lbs: ")
-            print(workoutCalc.lbsToKg(weight))
+            print(workoutCalc.weightConverter(weight, True))
         elif inp == 5:
+            weight = utils.userIntegerInput("Kg: ")
+            print(workoutCalc.weightConverter(weight, False))
+        elif inp == 6:
             print("Arrivederci")
             break
         else:
