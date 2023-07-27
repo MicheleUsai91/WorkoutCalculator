@@ -1,20 +1,32 @@
 #include <stdio.h>
 
-void showMenu();
-int getUserChoice();
-int getReps();
-float getWeight();
+int getInt(char s[]);
+float getFloat(char s[]);
 void calcoloMassimale();
 void calcoloReps();
 void volume();
 void weightConverter(int lbsToKg);
 
 int main() {
+    const char *menuItems[] = {
+        "MASSIMALE TEORICO",
+        "CARICO LAVORO",
+        "VOLUME ALLENAMENTO",
+        "LBS -> KG",
+        "KG -> LBS",
+        "USCITA"
+    };
+    int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
     int choice = 0;
 
     while (choice != 5) {
-        showMenu();
-        choice = getUserChoice();
+        printf("\n========== MENU ==========\n");
+        for (int i = 0; i < menuSize; i++) {
+            printf("%d - %s\n", i, menuItems[i]);
+        }
+        printf("==========================\n");
+
+        choice = getInt("SCELTA");
 
         switch (choice) {
             case 0:
@@ -43,70 +55,45 @@ int main() {
     return 0;
 }
 
-void showMenu() {
-    const char *menuItems[] = {
-        "MASSIMALE TEORICO",
-        "CARICO LAVORO",
-        "VOLUME ALLENAMENTO",
-        "LBS -> KG",
-        "KG -> LBS",
-        "USCITA"
-    };
-    int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
-    printf("\n========== MENU ==========\n");
-    for (int i = 0; i < menuSize; i++) {
-        printf("%d - %s\n", i, menuItems[i]);
-    }
-    printf("==========================\n");
-}
-
-int getUserChoice() {
-    int choice;
-    printf("SCELTA: ");
-    scanf("%d", &choice);
+int getInt(char s[]) {
+    int x;
+    printf("%s: ", s);
+    scanf("%d", &x);
     while (getchar() != '\n');
-    return choice;
+    return x;
 }
 
-int getReps() {
-    int reps;
-    printf("REPS: ");
-    scanf("%d", &reps);
-    while (getchar() != '\n');
-    return reps;
-}
-
-float getWeight() {
+float getFloat(char s[]) {
     float weight;
-    printf("PESO: ");
+    printf("%s: ", s);
     scanf("%f", &weight);
     while (getchar() != '\n');
     return weight;
 }
 
 void calcoloMassimale() {
-    float kg = getWeight();
-    int reps = getReps();
+    float kg = getFloat("PESO");
+    int reps = getInt("REPS");
     float res = kg / (1.0278 - (0.0278 * (float)reps));
     printf("MASSIMALE: %.2f\n", res);
 }
 
 void calcoloReps() {
-    float max = getWeight();
-    int reps = getReps();
+    float max = getFloat("PESO");
+    int reps = getInt("REPS");
     float res = max * (1 - ((float)reps / 40));
     printf("CARICO DI LAVORO: %.2f\n", res);
 }
 
 void volume() {
-    float kg = getWeight();
-    int reps = getReps();
+    float kg = getFloat("PESO");
+    int reps = getInt("REPS");
     float res = kg * (float)reps;
     printf("VOLUME: %.2f\n", res);
 }
 
 void weightConverter(int lbsToKg) {
-    float weight = getWeight();
+    float weight = getFloat("PESO");
     float res = lbsToKg == 1 ? weight / 2.2046 : weight * 2.2046;
     char *resString = lbsToKg == 1 ? "KG: " : "LBS: ";
     printf("%s%.2f\n", resString, res);
