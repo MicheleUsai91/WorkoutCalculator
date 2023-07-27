@@ -2,6 +2,12 @@
 
 void showMenu();
 int getUserChoice();
+int getReps();
+float getWeight();
+void calcoloMassimale();
+void calcoloReps();
+void volume();
+void weightConverter(int lbsToKg);
 
 int main() {
     int choice = 0;
@@ -99,7 +105,7 @@ void volume() {
     printf("VOLUME: %.2f\n", res);
 }
 
-void weightConverter(lbsToKg) {
+void weightConverter(int lbsToKg) {
     float weight = getWeight();
     float res = lbsToKg == 1 ? weight / 2.2046 : weight * 2.2046;
     char *resString = lbsToKg == 1 ? "KG: " : "LBS: ";
