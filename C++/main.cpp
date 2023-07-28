@@ -1,15 +1,15 @@
-#include <stdio.h>
-#include <stdbool.h>
+#include <iostream>
+#include <limits>
 
-int getInt(const char s[]);
-float getFloat(const char s[]);
+int getInt(const std::string& s);
+float getFloat(const std::string& s);
 void calcoloMassimale();
 void calcoloReps();
 void volume();
 void weightConverter(float factor);
 
 int main() {
-    const char *const menuItems[] = {
+    const std::string menuItems[] = {
         "MASSIMALE TEORICO",
         "CARICO LAVORO",
         "VOLUME ALLENAMENTO",
@@ -22,11 +22,11 @@ int main() {
     const float lbsToKgFactor = 1.0 / 2.2046;
 
     while (choice != 5) {
-        printf("\n========== MENU ==========\n");
+        std::cout << "\n========== MENU ==========\n";
         for (int i = 0; i < menuSize; i++) {
-            printf("%d - %s\n", i, menuItems[i]);
+            std::cout << i << " - " << menuItems[i] << '\n';
         }
-        printf("==========================\n");
+        std::cout << "==========================\n";
 
         choice = getInt("SCELTA");
 
@@ -47,75 +47,77 @@ int main() {
                 weightConverter(1.0 / lbsToKgFactor);
                 break;
             case 5:
-                printf("Uscita...\n");
+                std::cout << "Uscita...\n";
                 break;
             default:
-                printf("Errore. Inserire un numero tra 1 e 6.\n");
+                std::cout << "Errore. Inserire un numero tra 1 e 6.\n";
                 break;
         }
     }
     return 0;
 }
 
-int getInt(const char s[]) {
+int getInt(const std::string& s) {
     int x;
     bool validInput = false;
     do {
-        printf("%s: ", s);
-        if (scanf("%d", &x) == 1) {
+        std::cout << s << ": ";
+        if (std::cin >> x) {
             validInput = true;
         } else {
-            printf("Input non valido. Riprova.\n");
-            while (getchar() != '\n');
+            std::cout << "Input non valido. Riprova.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     } while (!validInput);
-    while (getchar() != '\n');
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     return x;
 }
 
-float getFloat(const char s[]) {
+float getFloat(const std::string& s) {
     float x;
     bool validInput = false;
     do {
-        printf("%s: ", s);
-        if (scanf("%f", &x) == 1) {
+        std::cout << s << ": ";
+        if (std::cin >> x) {
             validInput = true;
         } else {
-            printf("Input non valido. Riprova.\n");
-            while (getchar() != '\n');
+            std::cout << "Input non valido. Riprova.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     } while (!validInput);
-    while (getchar() != '\n');
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     return x;
 }
 
 void calcoloMassimale() {
     float kg = getFloat("PESO");
     int reps = getInt("REPS");
-    float repsFloat = (float)reps;
+    float repsFloat = static_cast<float>(reps);
     float res = kg / (1.0278 - (0.0278 * repsFloat));
-    printf("MASSIMALE: %.2f\n", res);
+    std::cout << "MASSIMALE: " << res << '\n';
 }
 
 void calcoloReps() {
     float max = getFloat("PESO");
     int reps = getInt("REPS");
-    float repsFloat = (float)reps;
+    float repsFloat = static_cast<float>(reps);
     float res = max * (1.0 - (repsFloat / 40.0));
-    printf("CARICO DI LAVORO: %.2f\n", res);
+    std::cout << "CARICO DI LAVORO: " << res << '\n';
 }
 
 void volume() {
     float kg = getFloat("PESO");
     int reps = getInt("REPS");
-    float repsFloat = (float)reps;
+    float repsFloat = static_cast<float>(reps);
     float res = kg * repsFloat;
-    printf("VOLUME: %.2f\n", res);
+    std::cout << "VOLUME: " << res << '\n';
 }
 
 void weightConverter(float factor) {
     float weight = getFloat("PESO");
     float res = weight * factor;
-    char *resString = factor == 1.0 ? "KG: " : "LBS: ";
-    printf("%s%.2f\n", resString, res);
+    std::string resString = (factor == 1.0) ? "KG: " : "LBS: ";
+    std::cout << resString << res << '\n';
 }
